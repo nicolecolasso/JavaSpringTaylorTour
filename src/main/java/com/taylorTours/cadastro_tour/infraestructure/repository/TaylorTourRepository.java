@@ -11,5 +11,5 @@ public interface TaylorTourRepository extends JpaRepository<TaylorTour,Integer> 
     Optional<TaylorTour> findByNome(String nome);
 
     @Transactional
-    void deleteByNome(String nome);
+        void deleteByNome(String nome);
 }

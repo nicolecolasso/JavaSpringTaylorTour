@@ -21,4 +21,27 @@ public class TaylorTourService {
                 () -> new RuntimeException("Nome não encontrado!")
         );
     }
+
+    public void deletarTourPorNome(String nome){
+        repository.deleteByNome(nome);
+    }
+
+    public void atualizarTourPorId(Integer id, TaylorTour tour){
+        TaylorTour tourEntity = repository.findById(id).orElseThrow(() ->
+            new RuntimeException("Turnê não encontrada"));
+        TaylorTour tourAtualizada = TaylorTour.builder()
+                .nome(tour.getNome() != null ? tour.getNome() :
+                    tourEntity.getNome())
+                .albumBase(tour.getAlbumBase() != null ? tour.getAlbumBase() :
+                    tourEntity.getAlbumBase())
+                .dataInicio(tour.getDataInicio() != null ? tour.getDataInicio() :
+                        tourEntity.getDataInicio())
+                .quantidadeShows(tour.getQuantidadeShows() != null ? tour.getQuantidadeShows() :
+                        tourEntity.getQuantidadeShows())
+                .faturamentoEstimado(tour.getFaturamentoEstimado() != null ? tour.getFaturamentoEstimado() :
+                        tourEntity.getFaturamentoEstimado())
+                .id(tourEntity.getId())
+                .build();
+        repository.saveAndFlush(tourAtualizada);
+    }
 }
